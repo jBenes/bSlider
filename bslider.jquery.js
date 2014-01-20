@@ -3,7 +3,7 @@
 * Desctiption: simple slider for jQuery
 * Features: auto sliding, left/right controlls, bullet controls
 * Author: Jiri Benes
-* Version: 1.0.4
+* Version: 1.0.5
 * TODO:
 * - bullets support
 * - autoswitch postponing
@@ -42,6 +42,7 @@
 *			auto: false, // allow auto switching. False for disabling, int for delay in ms
 *			autoHeight: true, // adjust slider height after item switch
 *			itemMaxWidth: false, // set window width as item width (width 100% is not posible since frame width is sum of items width )
+*			controlsMaxWidth: false, // controlls element gets 100% width
 *			step: false, // length of one move. false for item width, int for pixel
 *			//fixedWidth: true, // all items have same width (better performance)
 *			onFinishStop: false,
@@ -63,6 +64,7 @@ $.fn.bSlider = function( options ) {
 		auto: false,
 		autoHeight: true,
 		itemMaxWidth: false,
+		controlsMaxWidth: false,
 		step: false,
 		onFinishStop: false,
 		left: false,
@@ -181,6 +183,21 @@ $.fn.bSlider = function( options ) {
 		}
 		else {
 			settings.right = $(settings.right);
+		}
+
+		if(settings.controlsMaxWidth) {
+			var controls = $('.controls', $this);
+			
+			controls.width(parseInt($this.width()));
+
+			controls.addClass(_name+'-controls-resize');
+
+			$(window).unbind('resize.'+_name+'-controls').bind('resize.'+_name+'-controls', function(e) {
+				$('.'+_name+'-controls-resize').each(function() {
+					var slider = $(this).parents('.bslider');
+					$(this).width(parseInt(slider.width()));
+				});
+			});
 		}
 
 		// set width of browser if allowed
