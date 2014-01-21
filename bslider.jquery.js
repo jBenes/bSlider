@@ -13,12 +13,15 @@
 *
 * Usage:
 * 	DOM structure:
-* 		.slider [1]
-*			.frame [1]
-*				.item [1..n]
-*			.controlls [0/1]
-*				.left [0/1]
-*				.right [0/1]
+* 		.bslider [1]
+*			.window [0/1]
+*				.frame [1]
+*					.item [1..n]
+*				.controlls [0/1]
+*					.left [0/1]
+*					.right [0/1]
+*					.bullets [1]
+*						.bullet [0..n]
 *	CSS:
 *		.slider {
 *		    position: relative;
