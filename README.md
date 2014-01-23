@@ -50,6 +50,7 @@ bSlider
 		left: false, // example '#left-buttom' jQuery selector for left control, false if is used default DOM structure as above
 		right: false, // example '#right-buttom' jQuery selector for right control, false if is used default DOM structure as above
 		stepCount: 1, // int, how many items are slided. Default value 1
+		method: 'slide', // slide or fade
 		onReady: function() {},
 		onSlideBegin: function() {},
 		onSlideComplete: function() {},

@@ -52,6 +52,7 @@
 *			left: false, // example '#left-buttom' jQuery selector for left control, false if is used default DOM structure as above
 *			right: false, // example '#right-buttom' jQuery selector for right control, false if is used default DOM structure as above
 *			stepCount: 1, // int, how many items are slided. Default value 1
+*			method: 'slide', // slide or fade			
 *			onReady: function() {},
 *			onSlideBegin: function() {},
 *			onSlideComplete: function() {},
@@ -73,6 +74,7 @@ $.fn.bSlider = function( options ) {
 		left: false,
 		right: false,
 		stepCount: 1,
+		method: 'slide',
 		onReady: function() {},
 		onSlideBegin: function() {},
 		onSlideComplete: function() {},
@@ -120,32 +122,66 @@ $.fn.bSlider = function( options ) {
 			left: -1 * active * data.step
 		}
 
-		data.frame.animate(
-			animateCss, 
-			{
-				duration: settings.speed,
-				queue: false,
-				complete: function() {
+		if(settings.method == 'fade') {
+			//item.fadeIn(settings.speed).siblings().fadeOut(settings.speed);
+			item.fadeIn(
+				{
+					duration: settings.speed,
+					queue: false,
+					complete: function() {
 
-					settings.onSlideComplete.call( this, slider );
+						settings.onSlideComplete.call( this, slider );
 
-					if(data.settings.onFinishStop && data.active +1 == data.count) {
-						settings.onFinish.call( this, slider );
-					}
+						if(data.settings.onFinishStop && data.active +1 == data.count) {
+							settings.onFinish.call( this, slider );
+						}
 
-					if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
-						clearInterval(data.auto);
-						//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
-						var param = [slider, 'right'];
-						data.auto = setTimeout( (function(param) {
-						    return function() {
-						        slide(param);
-						    };
-						})(param) , settings.auto);
-					}
-				}	
-		 	}
-	 	);
+						if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
+							clearInterval(data.auto);
+							//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
+							var param = [slider, 'right'];
+							data.auto = setTimeout( (function(param) {
+							    return function() {
+							        slide(param);
+							    };
+							})(param) , settings.auto);
+						}
+					}	
+			 	}
+		 	).siblings().fadeOut(
+				{
+					duration: settings.speed,
+					queue: false,
+			 	}
+		 	);
+		} else {
+			data.frame.animate(
+				animateCss, 
+				{
+					duration: settings.speed,
+					queue: false,
+					complete: function() {
+
+						settings.onSlideComplete.call( this, slider );
+
+						if(data.settings.onFinishStop && data.active +1 == data.count) {
+							settings.onFinish.call( this, slider );
+						}
+
+						if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
+							clearInterval(data.auto);
+							//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
+							var param = [slider, 'right'];
+							data.auto = setTimeout( (function(param) {
+							    return function() {
+							        slide(param);
+							    };
+							})(param) , settings.auto);
+						}
+					}	
+			 	}
+		 	);
+		}
 
 		// change class of selected item
 		item.addClass("active").siblings().removeClass("active");
@@ -187,7 +223,7 @@ $.fn.bSlider = function( options ) {
 		else {
 			settings.right = $(settings.right);
 		}
-
+		// autoresizing controlls wrapper, if allowed
 		if(settings.controlsMaxWidth) {
 			var controls = $('.controls', $this);
 			
@@ -203,6 +239,8 @@ $.fn.bSlider = function( options ) {
 			});
 		}
 
+		controls.show();
+
 		// set width of browser if allowed
 		if(settings.itemMaxWidth) {
 			$('.item', $this).width(parseInt($this.width()) - parseInt($('.item', $this).first().css('padding-left')) - parseInt($('.item', $this).first().css('padding-right')));
@@ -216,12 +254,17 @@ $.fn.bSlider = function( options ) {
 
 					var width = slider.width();
 					//slider.find('.item').width(parseInt(width) - parseInt($('.item', slider).first().css('padding-left')) - parseInt($('.item', slider).first().css('padding-right')));
-					$('.item', slider).width(parseInt(width) - parseInt($('.item', slider).first().css('padding-left')) - parseInt($('.item', slider).first().css('padding-right')));
+					var new_width = parseInt(width) - parseInt($('.item', slider).first().css('padding-left')) - parseInt($('.item', slider).first().css('padding-right'));
+					$('.item', slider).width(new_width);
 
-					data.frame.css({
-						left: -1 * data.active * width,
-						width: data.count * width
-					});
+					if(settings.method == 'fade') {
+						data.frame.width(new_width);
+					} else {
+						data.frame.css({
+							left: -1 * data.active * width,
+							width: data.count * width
+						});
+					}
 
 					if(!data.settings.step) var step = $('.item', slider).first().outerWidth(true);
 
@@ -241,6 +284,14 @@ $.fn.bSlider = function( options ) {
 			if (typeof attr !== 'undefined' && attr !== false) {
 				$(this).css('background-image', 'url('+$(this).attr('data-background')+')');
 			}
+			// if we have fade effect, set item absolute
+			if(settings.method == 'fade') {
+				$(this).css({
+					'position': 'absolute',
+					'left': '0',
+					'top': '0'
+				});
+			}
 		}).length;
 		// get item width
 		var item = $('.item:nth-child('+(active+1)+')', $this);
@@ -250,6 +301,11 @@ $.fn.bSlider = function( options ) {
 		var height = item.outerHeight(true);
 		if($('.window', $this).length > 0) var size = $('.window', $this).outerWidth(true) / item.outerWidth(true);
 		else var size = $this.outerWidth(true) / item.outerWidth(true);
+
+		// if we have fade effect, set frame width as item width
+		if(settings.method == 'fade') {
+			frame_width = item.outerWidth(true);
+		}
 		// reset frame position
 		frame.css({
 			left: -1 * active * step,
@@ -258,6 +314,9 @@ $.fn.bSlider = function( options ) {
 		});
 		// set active class to curent item
 		item.addClass("active").siblings().removeClass("active");
+		if(settings.method == 'fade') {
+			item.show().siblings().hide();
+		}
 
 		// bing left event
 		settings.left.bind('click.'+_name, function() {
