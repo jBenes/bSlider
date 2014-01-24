@@ -124,35 +124,31 @@ $.fn.bSlider = function( options ) {
 
 		if(settings.method == 'fade') {
 			//item.fadeIn(settings.speed).siblings().fadeOut(settings.speed);
-			item.fadeIn(
-				{
-					duration: settings.speed,
-					queue: false,
-					complete: function() {
+			item.stop().fadeTo(
+				settings.speed,
+				1,
+				function() {
 
-						settings.onSlideComplete.call( this, slider );
+					settings.onSlideComplete.call( this, slider );
 
-						if(data.settings.onFinishStop && data.active +1 == data.count) {
-							settings.onFinish.call( this, slider );
-						}
+					if(data.settings.onFinishStop && data.active +1 == data.count) {
+						settings.onFinish.call( this, slider );
+					}
 
-						if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
-							clearInterval(data.auto);
-							//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
-							var param = [slider, 'right'];
-							data.auto = setTimeout( (function(param) {
-							    return function() {
-							        slide(param);
-							    };
-							})(param) , settings.auto);
-						}
-					}	
-			 	}
-		 	).siblings().fadeOut(
-				{
-					duration: settings.speed,
-					queue: false,
-			 	}
+					if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
+						clearInterval(data.auto);
+						//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
+						var param = [slider, 'right'];
+						data.auto = setTimeout( (function(param) {
+						    return function() {
+						        slide(param);
+						    };
+						})(param) , settings.auto);
+					}
+				}
+		 	).siblings().stop().fadeTo(
+				settings.speed,
+				0
 		 	);
 		} else {
 			data.frame.animate(
