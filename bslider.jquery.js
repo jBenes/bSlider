@@ -63,7 +63,7 @@
 (function ( $ ) {
 $.fn.bSlider = function( options ) {
 
-	var settings = $.extend({
+	var default_settings = $.extend({
 		speed: 500,
 		auto: false,
 		autoHeight: true,
@@ -193,6 +193,7 @@ $.fn.bSlider = function( options ) {
 	}
 
 	return this.each(function() {
+		var settings = jQuery.extend(true, {}, default_settings);
 		// data object
 		var data = {}
 		// slider object
