@@ -233,9 +233,9 @@ $.fn.bSlider = function( options ) {
 					$(this).width(parseInt(slider.width()));
 				});
 			});
-		}
 
-		controls.show();
+			controls.show();
+		}
 
 		// set width of browser if allowed
 		if(settings.itemMaxWidth) {
