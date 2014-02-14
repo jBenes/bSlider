@@ -16,18 +16,18 @@ bSlider
 ## Mandatory CSS rules (SASS/LESS syntax) ##
 
 	.slider {
-	    position: relative;
-	    overflow: hidden;
+		position: relative;
+		overflow: hidden;
 
-	    .item {
-	        position: relative;
-	        float: left;
-	    }
+		.item {
+			position: relative;
+			float: left;
+		}
 
-	    .frame {
-	        position: relative;
-	        overflow: hidden;
-	    }
+		.frame {
+			position: relative;
+			overflow: hidden;
+		}
 	}
 
 ## Init ##
@@ -51,8 +51,8 @@ bSlider
 		right: false, // example '#right-buttom' jQuery selector for right control, false if is used default DOM structure as above
 		stepCount: 1, // int, how many items are slided. Default value 1
 		method: 'slide', // slide or fade
-		onReady: function() {},
-		onSlideBegin: function() {},
-		onSlideComplete: function() {},
-		onFinish: function() {}
+		onReady: function(slider, settings) {},
+		onSlideBegin: function(slider, settings, active) {},
+		onSlideComplete: function(slider, settings) {},
+		onFinish: function(slider, settings) {}
 	});

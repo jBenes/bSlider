@@ -10,54 +10,6 @@
 * - disabling loop
 * BUG
 * - fix integer step
-*
-* Usage:
-* 	DOM structure:
-* 		.bslider [1]
-*			.window [0/1]
-*				.frame [1]
-*					.item [1..n]
-*				.controlls [0/1]
-*					.left [0/1]
-*					.right [0/1]
-*					.bullets [1]
-*						.bullet [0..n]
-*	CSS:
-*		.slider {
-*		    position: relative;
-*		    overflow: hidden;
-*
-*		    .item {
-*		        position: relative;
-*		        float: left;
-*		    }
-*
-*		    .frame {
-*		        position: relative;
-*		        overflow: hidden;
-*		    }
-*		}
-*	JS:
-*		$('.slider').bSlider();
-*		or
-*		$('.slider').bSlider({
-*			speed: 500, // sets item speed
-*			auto: false, // allow auto switching. False for disabling, int for delay in ms
-*			autoHeight: true, // adjust slider height after item switch
-*			itemMaxWidth: false, // set window width as item width (width 100% is not posible since frame width is sum of items width )
-*			controlsMaxWidth: false, // controlls element gets 100% width
-*			step: false, // length of one move. false for item width, int for pixel
-*			//fixedWidth: true, // all items have same width (better performance)
-*			onFinishStop: false,
-*			left: false, // example '#left-buttom' jQuery selector for left control, false if is used default DOM structure as above
-*			right: false, // example '#right-buttom' jQuery selector for right control, false if is used default DOM structure as above
-*			stepCount: 1, // int, how many items are slided. Default value 1
-*			method: 'slide', // slide or fade			
-*			onReady: function() {},
-*			onSlideBegin: function() {},
-*			onSlideComplete: function() {},
-*			onFinish: function() {}
-*		});
 */
 
 (function ( $ ) {
@@ -75,10 +27,10 @@ $.fn.bSlider = function( options ) {
 		right: false,
 		stepCount: 1,
 		method: 'slide',
-		onReady: function() {},
-		onSlideBegin: function() {},
-		onSlideComplete: function() {},
-		onFinish: function() {}
+		onReady: function(slider, settings) {},
+		onSlideBegin: function(slider, settings, active) {},
+		onSlideComplete: function(slider, settings) {},
+		onFinish: function(slider, settings) {}
 		//fixedWidth: true
 	}, options );
 
@@ -114,11 +66,11 @@ $.fn.bSlider = function( options ) {
 			$('.bullet:nth-child('+(active+1)+')', slider).addClass('active').siblings().removeClass('active');
 		}
 
-		settings.onSlideBegin.call( this, slider );
+		settings.onSlideBegin.call( this, slider, settings, active );
 		
 
 		// moove frame
-		animateCss = {			
+		animateCss = {
 			left: -1 * active * data.step
 		}
 
@@ -129,10 +81,10 @@ $.fn.bSlider = function( options ) {
 				1,
 				function() {
 
-					settings.onSlideComplete.call( this, slider );
+					settings.onSlideComplete.call( this, slider, settings );
 
 					if(data.settings.onFinishStop && data.active +1 == data.count) {
-						settings.onFinish.call( this, slider );
+						settings.onFinish.call( this, slider, settings );
 					}
 
 					if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
@@ -140,16 +92,16 @@ $.fn.bSlider = function( options ) {
 						//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
 						var param = [slider, 'right'];
 						data.auto = setTimeout( (function(param) {
-						    return function() {
-						        slide(param);
-						    };
+							return function() {
+								slide(param);
+							};
 						})(param) , settings.auto);
 					}
 				}
-		 	).siblings().stop().fadeTo(
+			).siblings().stop().fadeTo(
 				settings.speed,
 				0
-		 	);
+			);
 		} else {
 			data.frame.animate(
 				animateCss, 
@@ -158,10 +110,10 @@ $.fn.bSlider = function( options ) {
 					queue: false,
 					complete: function() {
 
-						settings.onSlideComplete.call( this, slider );
+						settings.onSlideComplete.call( this, slider, settings );
 
 						if(data.settings.onFinishStop && data.active +1 == data.count) {
-							settings.onFinish.call( this, slider );
+							settings.onFinish.call( this, slider, settings );
 						}
 
 						if(data.auto !== false && (!data.settings.onFinishStop || data.active +1 != data.count)) {
@@ -169,14 +121,14 @@ $.fn.bSlider = function( options ) {
 							//data.auto = setInterval(slide, settings.auto, [slider, 'right']);
 							var param = [slider, 'right'];
 							data.auto = setTimeout( (function(param) {
-							    return function() {
-							        slide(param);
-							    };
+								return function() {
+									slide(param);
+								};
 							})(param) , settings.auto);
 						}
 					}	
-			 	}
-		 	);
+				}
+			);
 		}
 
 		// change class of selected item
@@ -334,15 +286,15 @@ $.fn.bSlider = function( options ) {
 
 		$('.bullet:nth-child('+(active+1)+')', $this).addClass('active');
 
-		settings.onReady.call( this, $this );
+		settings.onReady.call( this, $this, settings );
 		// bind auto slide
 		if(settings.auto) {
 			//data.auto = setInterval(slide, settings.auto, [$this, 'right']);
 			var param = [$this, 'right'];
 			data.auto = setTimeout( (function(param) {
-			    return function() {
-			        slide(param);
-			    };
+				return function() {
+					slide(param);
+				};
 			})(param) , settings.auto);
 		} else {
 			data.auto = false;
