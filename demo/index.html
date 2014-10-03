@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./css/main.css">
+	</head>
+	<body>
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+		<div class="container">
+			<h1>jQuery-bSlider examples</h1>
+
+			<h2>Basic usage</h2>
+
+			<div class="bslider slider-normalw slider0">
+				<div class="window">
+					<div class="frame">
+						<img class="item" src="http://lorempixel.com/640/320/animals/">
+						<img class="item" src="http://lorempixel.com/640/320/animals/">
+						<img class="item" src="http://lorempixel.com/640/320/animals/">
+					</div>
+				</div>
+				<div class="controls controls-normal">
+					<div class="left">&laquo;</div>
+					<div class="right">&raquo;</div>
+				</div>
+			</div>
+
+			<h2>Responsive slider with autosliding, .window element omitted</h2>
+
+			<div class="bslider slider-maxw slider-no_win slider1">
+				<div class="frame">
+					<div class="item" style="background-color: #4ED958"></div>
+					<div class="item" style="background-color: #4F55CF"></div>
+					<div class="item" style="background-color: #FFDD64"></div>
+					<div class="item" style="background-color: #B71CB0"></div>
+				</div>
+			</div>
+
+			<h2>Responsive, max width, sticky controls, slow speed</h2>
+
+			<div class="bslider slider-normalw slider2">
+				<div class="window">
+					<div class="frame">
+						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
+						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
+						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
+					</div>
+				</div>
+				<div class="controls controls-wide">
+					<div class="left">&laquo;</div>
+					<div class="right">&raquo;</div>
+				</div>
+			</div>
+
+			<h2>Responsive slider with autosliding, sticky overflowed controls</h2>
+
+			<div class="bslider slider-maxw slider3">
+				<div class="window">
+					<div class="frame">
+						<div class="item" style="background-color: #4ED958"></div>
+						<div class="item" style="background-color: #4F55CF"></div>
+						<div class="item" style="background-color: #FFDD64"></div>
+						<div class="item" style="background-color: #B71CB0"></div>
+					</div>
+				</div>
+
+				<div class="controls controls-wide controls-overflow">
+					<div class="left">&laquo;</div>
+					<div class="right">&raquo;</div>
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+
+		</div>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="../bslider.jquery.js"></script>
+
+		<script type="text/javascript">
+			$(function(){
+				$('.slider0').bSlider();
+
+				$('.slider1').bSlider({
+					auto: 2000,
+					itemMaxWidth: true
+				});
+
+				$('.slider2').bSlider({
+					speed: 1000,
+					itemMaxWidth: true,
+					controlsMaxWidth: true
+				});
+
+				$('.slider3').bSlider({
+					auto: 2000,
+					itemMaxWidth: true,
+					controlsMaxWidth: true
+				});
+			});
+		</script>
+	</body>
+</html>
