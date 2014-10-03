@@ -1,4 +1,4 @@
-bSlider
+jQuery-bSlider
 =======
 
 ## DOM structure: ##
@@ -13,7 +13,7 @@ bSlider
 		.right [0/1]
 		.bullets [1]
 			.bullet [0..n]
-```css
+```
 
 ## Mandatory CSS rules (SASS/LESS syntax) ##
 
