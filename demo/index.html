@@ -96,7 +96,21 @@
 				</div>
 			</div>
 
-			<div class="clearfix"></div>
+			<h2>Variable item height</h2>
+
+			<div class="bslider slider-normalw slider5">
+				<div class="window">
+					<div class="frame">
+						<img class="item" style="width: 640px; height: 320px;" src="http://lorempixel.com/640/320/animals/">
+						<img class="item" style="width: 640px; height: 220px;" src="http://lorempixel.com/640/220/animals/">
+						<img class="item" style="width: 640px; height: 420px;" src="http://lorempixel.com/640/420/animals/">
+					</div>
+				</div>
+				<div class="controls controls-normal">
+					<div class="left">&laquo;</div>
+					<div class="right">&raquo;</div>
+				</div>
+			</div>
 
 		</div>
 
@@ -136,6 +150,8 @@
 						activeClass: 'active2'
 					}
 				});
+
+				$('.slider5').bSlider();
 			});
 		</script>
 	</body>

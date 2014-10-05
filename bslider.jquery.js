@@ -1,15 +1,9 @@
 /**
-* bSlideer
+* jQuery-bSlider
+* url: https://github.com/jBenes/jQuery-bSlider
 * Desctiption: simple slider for jQuery
-* Features: auto sliding, left/right controlls, bullet controls
 * Author: Jiri Benes
-* Version: 1.0.5
-* TODO:
-* - bullets support
-* - autoswitch postponing
-* - disabling loop
-* BUG
-* - fix integer step
+* Version: 1.0.6
 */
 
 (function ( $ ) {
