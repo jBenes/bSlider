@@ -1,5 +1,21 @@
 jQuery-bSlider
-=======
+==============
+
+Simple jQuery slider
+
+## Installation ##
+
+Install via bower
+
+```
+bower install --save jquery-bslider
+```
+
+Link library
+
+```html
+<script src="bower_compoents/jquery-bslider/bslider.jquery.min.js"></script>
+```
 
 ## DOM structure: ##
 

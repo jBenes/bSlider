@@ -1,9 +1,6 @@
 /**
 * jQuery-bSlider
 * url: https://github.com/jBenes/jQuery-bSlider
-* Desctiption: simple slider for jQuery
-* Author: Jiri Benes
-* Version: 1.0.7
 */
 
 (function ( $ ) {
