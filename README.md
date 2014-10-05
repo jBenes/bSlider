@@ -62,6 +62,18 @@ $('.bslider').bSlider({
 	right: false, // example '#right-buttom' jQuery selector for right control, false if is used default DOM structure as above
 	stepCount: 1, // int, how many items are slided. Default value 1
 	method: 'slide', // slide or fade
+	elements: { // element selectors and classes can be overriden
+		main: '.bslider',
+		window: '.window',
+		frame: '.frame',
+		item: '.item',
+		controls: '.controls',
+		left: '.left',
+		right: '.right',
+		bullet: '.bullet',
+		rewind: '.rewind',
+		activeClass: 'active' // this must be a class, not whole selector
+	},
 	onReady: function(slider, settings) {},
 	onSlideBegin: function(slider, settings, active) {},
 	onSlideComplete: function(slider, settings) {},

@@ -16,6 +16,21 @@
   position: relative;
   overflow: hidden;
 }
+.bslider2 {
+  position: relative;
+}
+.bslider2 .window2 {
+  overflow: hidden;
+}
+.bslider2 .item2 {
+  position: relative;
+  float: left;
+  height: 320px;
+}
+.bslider2 .frame2 {
+  position: relative;
+  overflow: hidden;
+}
 .slider-maxw {
   width: 100%;
 }
@@ -26,7 +41,8 @@
   max-width: 640px;
   margin: auto;
 }
-.controls {
+.controls,
+.controls2 {
   font-size: 48px;
   line-height: 48px;
 }
@@ -61,6 +77,8 @@
   text-align: center;
 }
 .controls-normal .right,
-.controls-normal .left {
+.controls-normal .left,
+.controls-normal .right2,
+.controls-normal .left2 {
   display: inline-block;
 }

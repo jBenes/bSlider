@@ -27,6 +27,19 @@ $.fn.bSlider = function( options ) {
 		right: false,
 		stepCount: 1,
 		method: 'slide',
+		elements: {
+			main: '.bslider',
+			window: '.window',
+			frame: '.frame',
+			item: '.item',
+			controls: '.controls',
+			left: '.left',
+			right: '.right',
+			bullet: '.bullet',
+			bullets: '.bullets',
+			rewind: '.rewind',
+			activeClass: 'active'
+		},
 		onReady: function(slider, settings) {},
 		onSlideBegin: function(slider, settings, active) {},
 		onSlideComplete: function(slider, settings) {},
@@ -59,15 +72,15 @@ $.fn.bSlider = function( options ) {
 			var active = way;
 		}
 		active = Math.ceil(active);
-		
+
 		// get choosen item
-		var item = $('.item:nth-child('+(active+1)+')', slider);
-		if($('.bullets', slider).length > 0) {
-			$('.bullet:nth-child('+(active+1)+')', slider).addClass('active').siblings().removeClass('active');
+		var item = $(settings.elements.item + ':nth-child('+(active+1)+')', slider);
+		if($(settings.elements.bullets, slider).length > 0) {
+			$(settings.elements.bullet + ':nth-child('+(active+1)+')', slider).addClass(settings.elements.activeClass).siblings().removeClass(settings.elements.activeClass);
 		}
 
 		settings.onSlideBegin.call( this, slider, settings, active );
-		
+
 
 		// moove frame
 		animateCss = {
@@ -104,7 +117,7 @@ $.fn.bSlider = function( options ) {
 			);
 		} else {
 			data.frame.animate(
-				animateCss, 
+				animateCss,
 				{
 					duration: settings.speed,
 					queue: false,
@@ -126,19 +139,19 @@ $.fn.bSlider = function( options ) {
 								};
 							})(param) , settings.auto);
 						}
-					}	
+					}
 				}
 			);
 		}
 
 		// change class of selected item
-		item.addClass("active").siblings().removeClass("active");
+		item.addClass(settings.elements.activeClass).siblings().removeClass(settings.elements.activeClass);
 		// set frame height if wanted
 		if(settings.autoHeight) {
-			//alert(item.html());
+
 			data.frame.animate({height: item.outerHeight(true)}, { duration: settings.speed, queue: false });
 		}
-		
+
 		// save data again
 		data.active = active;
 		slider.data(_name, data);
@@ -153,36 +166,36 @@ $.fn.bSlider = function( options ) {
 
 		var actualSlider = $(this);
 		// get active element
-		if($('.item.active', $this).length == 0) {
+		if($(settings.elements.item + '.' + settings.elements.activeClass, $this).length == 0) {
 			active = 0;
 		} else {
-			active = $('.item.active', $this).index();
+			active = $(settings.elements.item + '.' + settings.elements.activeClass, $this).index();
 		}
 
 		if (!settings.left) {
-			settings.left = $('.controls .left', $(this));
+			settings.left = $(settings.elements.controls + ' ' + settings.elements.left, $(this));
 		}
 		else {
-			settings.left = $(settings.left);	
+			settings.left = $(settings.left);
 		}
 
 		if (!settings.right) {
-			settings.right = $('.controls .right', $(this));
+			settings.right = $(settings.elements.controls + ' ' + settings.elements.right, $(this));
 		}
 		else {
 			settings.right = $(settings.right);
 		}
 		// autoresizing controlls wrapper, if allowed
 		if(settings.controlsMaxWidth) {
-			var controls = $('.controls', $this);
-			
+			var controls = $(settings.elements.controls, $this);
+
 			controls.width(parseInt($this.width()));
 
 			controls.addClass(_name+'-controls-resize');
 
 			$(window).unbind('resize.'+_name+'-controls').bind('resize.'+_name+'-controls', function(e) {
 				$('.'+_name+'-controls-resize').each(function() {
-					var slider = $(this).parents('.bslider');
+					var slider = $(this).parents(settings.elements.main);
 					$(this).width(parseInt(slider.width()));
 				});
 			});
@@ -192,7 +205,7 @@ $.fn.bSlider = function( options ) {
 
 		// set width of browser if allowed
 		if(settings.itemMaxWidth) {
-			$('.item', $this).width(parseInt($this.width()) - parseInt($('.item', $this).first().css('padding-left')) - parseInt($('.item', $this).first().css('padding-right')));
+			$(settings.elements.item, $this).width(parseInt($this.width()) - parseInt($(settings.elements.item, $this).first().css('padding-left')) - parseInt($(settings.elements.item, $this).first().css('padding-right')));
 
 			$this.addClass(_name+'-resize');
 
@@ -203,8 +216,8 @@ $.fn.bSlider = function( options ) {
 
 					var width = slider.width();
 					//slider.find('.item').width(parseInt(width) - parseInt($('.item', slider).first().css('padding-left')) - parseInt($('.item', slider).first().css('padding-right')));
-					var new_width = parseInt(width) - parseInt($('.item', slider).first().css('padding-left')) - parseInt($('.item', slider).first().css('padding-right'));
-					$('.item', slider).width(new_width);
+					var new_width = parseInt(width) - parseInt($(settings.elements.item, slider).first().css('padding-left')) - parseInt($(settings.elements.item, slider).first().css('padding-right'));
+					$(settings.elements.item, slider).width(new_width);
 
 					if(settings.method == 'fade') {
 						data.frame.width(new_width);
@@ -215,18 +228,18 @@ $.fn.bSlider = function( options ) {
 						});
 					}
 
-					if(!data.settings.step) var step = $('.item', slider).first().outerWidth(true);
+					if(!data.settings.step) var step = $(settings.elements.item, slider).first().outerWidth(true);
 
 					data.step = step;
 					data.width = width;
 					slider.data(_name, data);
 				});
-				
+
 			});
 		}
 		var frame_width = 0;
 		// loop items, set items count
-		var count = $('.item', $this).each(function() {
+		var count = $(settings.elements.item, $this).each(function() {
 			frame_width += $(this).outerWidth(true);
 			// copy data-background from item as their bg img
 			var attr = $(this).attr('data-background');
@@ -243,12 +256,12 @@ $.fn.bSlider = function( options ) {
 			}
 		}).length;
 		// get item width
-		var item = $('.item:nth-child('+(active+1)+')', $this);
-		var frame = $('.frame', $this);
+		var item = $(settings.elements.item + ':nth-child('+(active+1)+')', $this);
+		var frame = $(settings.elements.frame, $this);
 		if(settings.step) var step = settings.step;
 		else var step = item.outerWidth(true);
 		var height = item.outerHeight(true);
-		if($('.window', $this).length > 0) var size = $('.window', $this).outerWidth(true) / item.outerWidth(true);
+		if($(settings.elements.window, $this).length > 0) var size = $(settings.elements.window, $this).outerWidth(true) / item.outerWidth(true);
 		else var size = $this.outerWidth(true) / item.outerWidth(true);
 
 		// if we have fade effect, set frame width as item width
@@ -262,7 +275,7 @@ $.fn.bSlider = function( options ) {
 			width: frame_width
 		});
 		// set active class to curent item
-		item.addClass("active").siblings().removeClass("active");
+		item.addClass(settings.elements.activeClass).siblings().removeClass(settings.elements.activeClass);
 		if(settings.method == 'fade') {
 			item.show().siblings().hide();
 		}
@@ -276,15 +289,15 @@ $.fn.bSlider = function( options ) {
 			slide(actualSlider, 'right');
 		});
 		// bind bullet event
-		$('.controls .bullet', $this).bind('click.'+_name, function() {
-			slide($(this).parents('.bslider'), $(this).index());
+		$(settings.elements.controls + ' ' + settings.elements.bullet, $this).bind('click.'+_name, function() {
+			slide($(this).parents(settings.elements.main), $(this).index());
 		});
 
-		$('.rewind', $this).bind('click.'+_name, function() {
-			slide($(this).parents('.bslider'), 0);
+		$(settings.elements.rewind, $this).bind('click.'+_name, function() {
+			slide($(this).parents(settings.elements.main), 0);
 		});
 
-		$('.bullet:nth-child('+(active+1)+')', $this).addClass('active');
+		$(settings.elements.bullet + ':nth-child('+(active+1)+')', $this).addClass(settings.elements.activeClass);
 
 		settings.onReady.call( this, $this, settings );
 		// bind auto slide

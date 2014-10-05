@@ -80,6 +80,22 @@
 				</div>
 			</div>
 
+			<h2>Renamed elements</h2>
+
+			<div class="bslider2 slider-normalw slider4">
+				<div class="window2">
+					<div class="frame2">
+						<img class="item2" src="http://lorempixel.com/640/320/animals/">
+						<img class="item2" src="http://lorempixel.com/640/320/animals/">
+						<img class="item2" src="http://lorempixel.com/640/320/animals/">
+					</div>
+				</div>
+				<div class="controls2 controls-normal">
+					<div class="left2">&laquo;</div>
+					<div class="right2">&raquo;</div>
+				</div>
+			</div>
+
 			<div class="clearfix"></div>
 
 		</div>
@@ -106,6 +122,19 @@
 					auto: 2000,
 					itemMaxWidth: true,
 					controlsMaxWidth: true
+				});
+
+				$('.slider4').bSlider({
+					elements: {
+						main: '.bslider2',
+						window: '.window2',
+						frame: '.frame2',
+						item: '.item2',
+						controls: '.controls2',
+						left: '.left2',
+						right: '.right2',
+						activeClass: 'active2'
+					}
 				});
 			});
 		</script>
