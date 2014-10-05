@@ -71,6 +71,7 @@ $('.bslider').bSlider({
 		left: '.left',
 		right: '.right',
 		bullet: '.bullet',
+		bulletHtml: '<span class="bullet"></span>',
 		rewind: '.rewind',
 		activeClass: 'active' // this must be a class, not whole selector
 	},

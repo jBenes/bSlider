@@ -82,3 +82,30 @@
 .controls-normal .left2 {
   display: inline-block;
 }
+.bullets,
+.bullets2 {
+  position: absolute;
+  left: 0;
+  bottom: 7px;
+}
+.bullets .bullet,
+.bullets2 .bullet,
+.bullets .bullet2,
+.bullets2 .bullet2 {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #333;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.bullets .bullet.active,
+.bullets2 .bullet.active,
+.bullets .bullet2.active,
+.bullets2 .bullet2.active,
+.bullets .bullet.active2,
+.bullets2 .bullet.active2,
+.bullets .bullet2.active2,
+.bullets2 .bullet2.active2 {
+  background: orange;
+}

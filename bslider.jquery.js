@@ -3,13 +3,13 @@
 * url: https://github.com/jBenes/jQuery-bSlider
 * Desctiption: simple slider for jQuery
 * Author: Jiri Benes
-* Version: 1.0.6
+* Version: 1.0.7
 */
 
 (function ( $ ) {
 $.fn.bSlider = function( options ) {
 
-	var default_settings = $.extend({
+	var default_settings = $.extend(true, {
 		speed: 500,
 		auto: false,
 		autoHeight: true,
@@ -30,6 +30,7 @@ $.fn.bSlider = function( options ) {
 			left: '.left',
 			right: '.right',
 			bullet: '.bullet',
+			bulletHtml: '<span class="bullet"></span>',
 			bullets: '.bullets',
 			rewind: '.rewind',
 			activeClass: 'active'
@@ -158,6 +159,8 @@ $.fn.bSlider = function( options ) {
 		// slider object
 		$this = $(this);
 
+		var $bullets = $(settings.elements.bullets, $this);
+
 		var actualSlider = $(this);
 		// get active element
 		if($(settings.elements.item + '.' + settings.elements.activeClass, $this).length == 0) {
@@ -248,6 +251,8 @@ $.fn.bSlider = function( options ) {
 					'top': '0'
 				});
 			}
+
+			$bullets.append(settings.elements.bulletHtml);
 		}).length;
 		// get item width
 		var item = $(settings.elements.item + ':nth-child('+(active+1)+')', $this);
@@ -283,7 +288,7 @@ $.fn.bSlider = function( options ) {
 			slide(actualSlider, 'right');
 		});
 		// bind bullet event
-		$(settings.elements.controls + ' ' + settings.elements.bullet, $this).bind('click.'+_name, function() {
+		$(settings.elements.bullet, $bullets).bind('click.'+_name, function() {
 			slide($(this).parents(settings.elements.main), $(this).index());
 		});
 
