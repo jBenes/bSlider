@@ -14,7 +14,7 @@ bower install --save jquery-bslider
 Link library
 
 ```html
-<script src="bower_compoents/jquery-bslider/bslider.jquery.min.js"></script>
+<script src="bower_components/jquery-bslider/bslider.jquery.min.js"></script>
 ```
 
 ## DOM structure: ##
