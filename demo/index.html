@@ -19,14 +19,32 @@
 		<div class="container">
 			<h1>jQuery-bSlider examples</h1>
 
-			<h2>Basic usage</h2>
+			<h2>Basic</h2>
 
 			<div class="bslider slider-normalw slider0">
 				<div class="window">
 					<div class="frame">
 						<img class="item" src="http://lorempixel.com/640/320/animals/">
+						<img class="item" src="http://lorempixel.com/640/320/nature/">
+						<img class="item" src="http://lorempixel.com/640/320/food/">
+					</div>
+				</div>
+				<div class="controls controls-normal">
+					<div class="left">&laquo;</div>
+					<div class="right">&raquo;</div>
+				</div>
+				<div class="bullets">
+				</div>
+			</div>
+
+			<h2>Fade</h2>
+
+			<div class="bslider slider-normalw slider05">
+				<div class="window">
+					<div class="frame">
 						<img class="item" src="http://lorempixel.com/640/320/animals/">
-						<img class="item" src="http://lorempixel.com/640/320/animals/">
+						<img class="item" src="http://lorempixel.com/640/320/nature/">
+						<img class="item" src="http://lorempixel.com/640/320/food/">
 					</div>
 				</div>
 				<div class="controls controls-normal">
@@ -54,8 +72,8 @@
 				<div class="window">
 					<div class="frame">
 						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
-						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
-						<div class="item" style="background-image: url(http://lorempixel.com/640/320/animals/)"></div>
+						<div class="item" style="background-image: url(http://lorempixel.com/640/320/nature/)"></div>
+						<div class="item" style="background-image: url(http://lorempixel.com/640/320/food/)"></div>
 					</div>
 				</div>
 				<div class="controls controls-wide">
@@ -88,8 +106,8 @@
 				<div class="window2">
 					<div class="frame2">
 						<img class="item2" src="http://lorempixel.com/640/320/animals/">
-						<img class="item2" src="http://lorempixel.com/640/320/animals/">
-						<img class="item2" src="http://lorempixel.com/640/320/animals/">
+						<img class="item2" src="http://lorempixel.com/640/320/nature/">
+						<img class="item2" src="http://lorempixel.com/640/320/food/">
 					</div>
 				</div>
 				<div class="controls2 controls-normal">
@@ -106,8 +124,8 @@
 				<div class="window">
 					<div class="frame">
 						<img class="item" style="width: 640px; height: 320px;" src="http://lorempixel.com/640/320/animals/">
-						<img class="item" style="width: 640px; height: 220px;" src="http://lorempixel.com/640/220/animals/">
-						<img class="item" style="width: 640px; height: 420px;" src="http://lorempixel.com/640/420/animals/">
+						<img class="item" style="width: 640px; height: 220px;" src="http://lorempixel.com/640/220/nature/">
+						<img class="item" style="width: 640px; height: 420px;" src="http://lorempixel.com/640/420/food/">
 					</div>
 				</div>
 				<div class="controls controls-normal">
@@ -124,6 +142,10 @@
 		<script type="text/javascript">
 			$(function(){
 				$('.slider0').bSlider();
+
+				$('.slider05').bSlider({
+					method: 'fade'
+				});
 
 				$('.slider1').bSlider({
 					auto: 2000,
